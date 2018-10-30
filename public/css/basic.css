@@ -1,0 +1,34 @@
+ul {
+    list-style-type: none;
+}
+
+.input-form li {
+    margin: 5px 0px;
+}
+
+.navbar-header {
+    width: 180px;
+    text-align: center;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #f9f9f9;
+}
+
+input[type=file] {
+    display: inline !important;
+}
+
+.table th,
+.table td {
+    /* text-align: center; */
+    vertical-align: middle !important;
+}
+
+.navbar {
+    border-radius: 0 !important;
+}
+
+table.table-striped td {
+    border-top: 0 !important;
+}
