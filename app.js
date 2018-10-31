@@ -4,7 +4,6 @@ let express = require("express"),
     md5 = require("md5-node"),
     bodyParser = require("body-parser"),
     multiparty = require("multiparty"),
-    // form = new multiparty.Form(),
     DB = require("./lib/db"),
     app = express();
 
