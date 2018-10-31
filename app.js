@@ -3,6 +3,8 @@ let express = require("express"),
     ejs = require("ejs"),
     md5 = require("md5-node"),
     bodyParser = require("body-parser"),
+    MongoClient = require("mongodb").MongoClient,
+    DBurl = "mongodb://127.0.0.1:27017/test",
     app = express();
 
 // 静态资源托管
@@ -51,8 +53,18 @@ app.post("/doLogin", (req, res) => {
         username: req.body.username,
         password: md5(req.body.password), // 这里要进行加密
     }
-    req.session.userInfo = userInfo;
-    res.redirect("/");
+    MongoClient.connect(DBurl, (err, client) => {
+        let dbo = client.db("test");
+        dbo.collection("user").find(userInfo).toArray((err, data) => {
+            console.log(data);
+            if (data.length > 0) {
+                req.session.userInfo = userInfo;
+                res.redirect("/");
+            } else {
+                res.send(`<script>alert("登录失败，请重试！");window.location.href="/login"</script>`);
+            }
+        });
+    });
 });
 
 // 退出登录操作
