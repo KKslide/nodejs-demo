@@ -20,5 +20,8 @@
     "md5-node": "^1.0.1",
     "mongodb": "^3.1.8",
     "zepto": "^1.2.0"
+  },
+  "devDependencies": {
+    "multiparty": "^4.2.1"
   }
 }
