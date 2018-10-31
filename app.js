@@ -3,11 +3,14 @@ let express = require("express"),
     ejs = require("ejs"),
     md5 = require("md5-node"),
     bodyParser = require("body-parser"),
+    multiparty = require("multiparty"),
+    // form = new multiparty.Form(),
     DB = require("./lib/db"),
     app = express();
 
 // 静态资源托管
 app.use(express.static("public"));
+app.use("/upload", express.static("upload"));
 
 // 配置body-parser中间件
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -80,13 +83,62 @@ app.get("/", (req, res) => {
 });
 
 // 列表页
+app.get("/add", (req, res) => {
+    res.render("add");
+});
+
+// 增加操作
+app.post("/doAdd", (req, res) => {
+    form.uploadDir = "upload";
+    form.parse(req, (err, fields, files) => {
+        let newProduct = {
+            "title": fields.title[0],
+            "price": fields.price[0],
+            "fee": fields.fee[0],
+            "description": fields.description[0],
+            "pic": files.pic[0].path
+        }
+        DB.insert("product", newProduct, (err, data) => {
+            res.redirect("/");
+        });
+    });
+});
+
+// 修改
 app.get("/edit", (req, res) => {
-    res.render("edit");
+    let _id = req.query.id;
+    DB.find("product", { "_id": DB.ObjectID(_id) }, (err, data) => {
+        res.render("edit", {
+            list: data[0]
+        });
+    });
+});
+
+app.post("/doEdit", (req, res) => {
+    let form = new multiparty.Form();
+    form.uploadDir = "upload";
+    form.parse(req, (err, fields, files) => {
+        console.log(fields);
+        console.log('!!!!!!!!!!--------!!!!!!!!!!');
+        console.log(files);
+        // return;
+        let editID = fields._id[0];
+        let editProduct = {
+            "title": fields.title[0],
+            "price": fields.price[0],
+            "fee": fields.fee[0],
+            "description": fields.description[0],
+            "pic": files.pic[0].path
+        }
+        DB.update("product", { "_id": DB.ObjectID(editID) }, editProduct, (err, data) => {
+            res.redirect("/");
+        });
+    });
 });
 
 // 删除
 app.get("/del", (req, res) => {
-    
+
 });
 
 app.listen(8989, () => {
