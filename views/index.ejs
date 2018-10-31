@@ -58,14 +58,14 @@
                                 
                             <tr>
                                 <td><%= i+1%></td>
-                                <td><img src="<%= list[i].pic%>" onerror="this.src='images/404.jpg'" width="50"></td>
+                                <td><img src="<%= list[i].pic%>" onerror="this.src='images/404.jpg'" data-src="<%= list[i].pic%>" width="50"></td>
                                 <td><%= list[i].title%></td>
                                 <td><%= list[i].price%></td>
                                 <td><%= list[i].fee%></td>
 
-                                <td class="text-center" data-id="<%=list[i]['_id']%>">
-                                    <a href="/edit" class="edit">修改</a>
-                                    <a href="/del" class="del">删除</a>
+                                <td class="text-center">
+                                    <a href="/edit?id=<%=list[i]['_id']%>" class="edit">修改</a>
+                                    <a href="/del?id=<%=list[i]['_id']%>" class="del">删除</a>
                                 </td>
                             </tr>
 
