@@ -72,12 +72,21 @@ app.get("/logOut", (req, res) => {
 
 // 首页
 app.get("/", (req, res) => {
-    res.render("index");
+    DB.find("product", {}, (err, data) => {
+        res.render("index", {
+            list: data
+        });
+    });
 });
 
 // 列表页
 app.get("/edit", (req, res) => {
     res.render("edit");
+});
+
+// 删除
+app.get("/del", (req, res) => {
+    
 });
 
 app.listen(8989, () => {
