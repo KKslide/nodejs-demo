@@ -65,7 +65,7 @@
 
                                 <td class="text-center">
                                     <a href="/edit?id=<%=list[i]['_id']%>" class="edit">修改</a>
-                                    <a href="/del?id=<%=list[i]['_id']%>" class="del">删除</a>
+                                    <a href="/del?id=<%=list[i]['_id']%>" class="del" onclick="del(this);return false;">删除</a>
                                 </td>
                             </tr>
 
@@ -82,3 +82,4 @@
 </body>
 
 </html>
+<script> function del(_this) { if (confirm("确定要删除吗？")) window.location.href=_this.getAttribute("href"); } </script>

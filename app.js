@@ -4,6 +4,7 @@ let express = require("express"),
     md5 = require("md5-node"),
     bodyParser = require("body-parser"),
     multiparty = require("multiparty"),
+    fs = require("fs"),
     DB = require("./lib/db"),
     app = express();
 
@@ -88,6 +89,7 @@ app.get("/add", (req, res) => {
 
 // 增加操作
 app.post("/doAdd", (req, res) => {
+    let form = new multiparty.Form();
     form.uploadDir = "upload";
     form.parse(req, (err, fields, files) => {
         let newProduct = {
@@ -117,17 +119,21 @@ app.post("/doEdit", (req, res) => {
     let form = new multiparty.Form();
     form.uploadDir = "upload";
     form.parse(req, (err, fields, files) => {
-        console.log(fields);
-        console.log('!!!!!!!!!!--------!!!!!!!!!!');
-        console.log(files);
-        // return;
-        let editID = fields._id[0];
-        let editProduct = {
+        var editID = fields._id[0];
+        var editProduct = {
             "title": fields.title[0],
             "price": fields.price[0],
             "fee": fields.fee[0],
             "description": fields.description[0],
             "pic": files.pic[0].path
+        }
+        var OriginalFilename = files.pic[0].originalFilename;
+        var pic = files.pic[0].path;
+        if (OriginalFilename) { // 修改了图片
+            editProduct['pic'] = pic;
+        } else { // 没有修改图片
+            delete editProduct['pic'];
+            fs.unlink(pic);
         }
         DB.update("product", { "_id": DB.ObjectID(editID) }, editProduct, (err, data) => {
             res.redirect("/");
@@ -137,7 +143,10 @@ app.post("/doEdit", (req, res) => {
 
 // 删除
 app.get("/del", (req, res) => {
-
+    let id = req.query.id;
+    DB.delete("product", { "_id": DB.ObjectID(id) }, (err, data) => {
+        res.redirect("/");
+    });
 });
 
 app.listen(8989, () => {
