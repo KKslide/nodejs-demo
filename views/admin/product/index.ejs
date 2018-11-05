@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <title>NodeJs - Demo</title>
-    <link rel="stylesheet" href="css/basic.css">
+    <link rel="stylesheet" href="/css/basic.css">
 </head>
 
 <body>
     <!--The content below is only a placeholder and can be replaced.-->
 
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
 
-    <%- include common/nav.ejs%>
+    <%- include ../public/nav.ejs%>
 
     <div class="container-fluid">
         <div class="row">
 
-            <%- include common/aside.ejs%>
+            <%- include ../public/aside.ejs%>
 
             <div class="col-sm-10">
                 <ol class="breadcrumb">
@@ -47,6 +47,7 @@
                                 <th>编号</th>
                                 <th>图标</th>
                                 <th>名称</th>
+                                <th>分类</th>
                                 <th>价格</th>
                                 <th>邮费</th>
                                 <th class="text-center">操作</th>
@@ -58,14 +59,15 @@
                                 
                             <tr>
                                 <td><%= i+1%></td>
-                                <td><img src="<%= list[i].pic%>" onerror="this.src='images/404.jpg'" data-src="<%= list[i].pic%>" width="50"></td>
+                                <td><img src="/<%= list[i].pic%>" onerror="this.src='images/404.jpg'" data-src="<%= list[i].pic%>" width="50"></td>
                                 <td><%= list[i].title%></td>
+                                <td></td>
                                 <td><%= list[i].price%></td>
                                 <td><%= list[i].fee%></td>
 
                                 <td class="text-center">
-                                    <a href="/edit?id=<%=list[i]['_id']%>" class="edit">修改</a>
-                                    <a href="/del?id=<%=list[i]['_id']%>" class="del" onclick="del(this);return false;">删除</a>
+                                    <a href="/admin/product/edit?id=<%=list[i]['_id']%>" class="edit">修改</a>
+                                    <a href="/admin/product/del?id=<%=list[i]['_id']%>" class="del" onclick="del(this);return false;">删除</a>
                                 </td>
                             </tr>
 

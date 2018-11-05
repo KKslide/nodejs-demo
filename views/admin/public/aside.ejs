@@ -1,0 +1,18 @@
+<div class="col-sm-2">
+    <strong class="list-group-item">商品管理</strong>
+    <a href="/admin/product" class="list-group-item"> 商品列表</a>
+    <a href="/admin/product/add" class="list-group-item">增加商品</a>
+    <strong class="list-group-item">分类管理</strong>
+    <a href="/admin/sort" class="list-group-item">商品分类列表</a>
+    <a href="/admin/sort/add" class="list-group-item">增加商品分类</a>
+</div>
+<script>
+    var navs = document.querySelectorAll(".list-group-item"),
+        pathname = window.location.pathname;
+    console.log(window.location.pathname);
+    for (let i = 0; i < navs.length; i++) {
+        if (pathname==navs[i].getAttribute("href")) {
+            navs[i].classList.add("active");
+        }
+    }
+</script>
