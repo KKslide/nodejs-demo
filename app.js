@@ -4,6 +4,15 @@ var express = require("express"),
     _frontEndRouter = require("./routes/index"),
     _adminRouter = require("./routes/admin");
 
+// 检查upload目录是否存在
+fs.exists("upload", (exists) => {
+    if (!exists) {
+        fs.mkdir("upload", (err) => {
+            if (err) return console.log(err);
+        });
+    };
+});
+
 // 静态资源托管
 app.use(express.static("public"));
 app.use("/upload", express.static("upload"));
