@@ -13,6 +13,8 @@ fs.exists("upload", (exists) => {
     };
 });
 
+// hahahahahahah,,,
+
 // 静态资源托管
 app.use(express.static("public"));
 app.use("/upload", express.static("upload"));
